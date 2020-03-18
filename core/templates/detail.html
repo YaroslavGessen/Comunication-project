@@ -1,0 +1,22 @@
+{% extends "index.html" %}
+
+{% block content %}
+      <dl class="row mt-4">
+        <dt class="col-sm-3 h2">Customer: </dt>
+        <dd class="col-sm-9 h2"><u>{{get_customer.name}}</u></dd>
+      
+        
+          <dt class="col-sm-3 mt-4">Create date:</dt>
+          <dd class="col-sm-9 mt-4">
+          <p>{{get_customer.create_date}}</p>
+          </dd>
+      
+          <dt class="col-sm-3">Customer id:</dt>
+          <dd class="col-sm-9">{{get_customer.customer_id}}</dd>
+      
+          <dt class="col-sm-3 text-truncate">Details:</dt>
+          <dd class="col-sm-9">{{get_customer.text}}</dd>
+          </dd>
+      </dl>
+      <p><a class="btn btn-primary btn-lg btn-block" href="/">Return</a></p>
+  {% endblock %}

@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+    <title>Comunication LTD</title>
+  </head>
+  <body>
+        {% if request.user.is_authenticated %}
+        <div class="container">
+          <ul class="nav nav-pills nav-fill">
+            <li class="nav-item">
+              {% url "home" as url_home%}
+              <a class="nav-link {%if url_home == request.path %}active{% endif %}" href="{{url_home}}">Home</a>
+            </li>
+            <li class="nav-item">
+              {% url "edit_page" as url_edit_page %}
+              <a class="nav-link {%if url_edit_page == request.path %}active{% endif %}" href="{{url_edit_page}}">Edit panel</a>
+            </li>
+        <div>
+          <li class="nav-item dropdown justify-content-end">
+            <a class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{request.user}}</a>
+            <div class="dropdown-menu">
+              <a class="dropdown-item" href="#">Account</a>
+              <div class="dropdown-divider"></div>
+              <a class="dropdown-item" href="#">Change password</a>
+              {% url "logout_page" as url_logout_page %}
+              <a class="dropdown-item btn-danger " href="{{url_logout_page}}">Logout</a>
+            </div>
+          </li>
+        </div>
+    {% else %}
+      <div class="container">
+        <ul class="nav nav-pills nav-fill">
+          <li class="nav-item">
+            {% url "login_page" as url_login_page %}
+            <a class="nav-link {%if url_login_page == request.path %}active{% endif %}" href="{{url_login_page}}">Login</a>
+          </li>
+          <li class="nav-item">
+            {% url "register_page" as url_register_page %}
+            <a class="nav-link {%if url_register_page == request.path %}active{% endif %}" href="{{url_register_page}}">Registration</a>
+          </li>
+      {% endif %}
+      </ul>
+      {% block content %}
+        <h1 class="mt-4">Custumers:</h1>
+
+{% for i in list_customers %}
+
+        <ul class="list-group mb-2">
+
+        <li class="list-group-item"><b>{{i.id}}</b>
+            <span>{{i.name}}</span>
+            <span class="m-2">{{i.text|truncatechars:"5"}}</span>
+            <span class="float-right ml-2 btn btn-light"><a href="/detail/{{i.id}}">Check</a></span>
+            <span class="float-right">{{i.create_date| date:"F d Y"}}</span>
+            
+        </li>
+        </ul>
+{% endfor %}
+{% endblock %}
+    </div>
+    
+    
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+  </body>
+</html>

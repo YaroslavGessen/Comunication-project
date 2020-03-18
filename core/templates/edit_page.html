@@ -1,0 +1,95 @@
+{% extends "index.html" %}
+
+  {% block content %}
+    <h1 class="mt-4">Custumer panel</h1>
+
+    <!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalScrollable">
+    Add new custumer
+  </button><br>
+
+  <!-- Checking changes -->
+  {% if messages %}
+    <div class="badge badge-pill badge-success"> 
+        {% for m in messages %}
+            {{m}}
+        {% endfor %}
+    </div>
+  {% endif %}
+
+
+  {% if update %}
+    <p>Update Page</p>
+
+    <form id="update_data" method="post">
+        {% csrf_token %}
+        {{form}}
+    </form>
+    <p> <a class="btn btn-secondary mt-2" href="{% url 'edit_page' %}"> Return</a>
+    <button form="update_data" type="submit" class="btn btn-primary mt-2 ml-2">Update</button></p>
+
+  {% else %}
+
+    <table class="table table-hover mt-4">
+        <thead>
+          <tr>
+            <th scope="col">ID</th>
+            <th scope="col">Create date</th>
+            <th scope="col">Name</th>
+            <th scope="col">Change</th>
+            <th scope="col">Delete</th>
+          </tr>
+        </thead>
+        <tbody>
+            {% for i in list_customers %}
+          <tr>
+            <th scope="row">{{i.customer_id}}</th>
+            <td>{{i.create_date}}</td>
+            <td>{{i.name}}</td>
+            <td><a class="btn btn-outline-info" href="{% url 'update_page' i.id %}">Change</td>
+            <td>
+                <form id="delete_form" action="{% url 'delete_page' i.id %}" method="POST">{% csrf_token %}</form>
+                <a class="btn btn-outline-danger" href="javascript:void()" onclick="delete_question()">Delete</a>
+                <script>
+                    function delete_question() {
+                        if (confirm("Are you sure?")) {
+                            document.getElementById('delete_form').submit()
+                        }
+                    }
+                </script>
+            
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+
+    {% endif %}
+  
+  <!-- Modal -->
+  <div class="modal fade" id="exampleModalScrollable" tabindex="-1" role="dialog" aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalScrollableTitle">New custumer</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form id="add_form" method="post">
+              {% csrf_token %}
+              {{form}}
+          </form>
+          
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button form="add_form" type="submit" class="btn btn-primary">Save</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+{% endblock %}

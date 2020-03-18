@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+{% load static %}
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="{% static '../static/css/style.css' %}" type='text/css'>
+    <link rel="stylesheet" href="{% static '../static/css/font-awesome.css' %}" type='text/css'> 
+</head>
+
+<body>
+<div class="container">
+    <img src="{% static '../static/css/img/ico.png' %}">
+    <form>
+        {% csrf_token %}
+        <div class="dws-input">
+            <a type="text" name="username" placeholder="Enter Login"> {{form.username}}</a>
+        </div>
+        <div class="dws-input">
+            <a type="password" name="password" placeholder="Enter Password"> {{form.password}} </a>
+        </div>
+            <input class="dws-submit" type="submit" name="submit" value="Login">
+            <br />
+            <a href="#">Forgot password =(</a>
+            <div class="reg">
+                <a href="#">Registration</a>
+            </div>
+        
+    </form>
+</div>
+
+</body>
+ 
