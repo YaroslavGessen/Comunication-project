@@ -1,6 +1,6 @@
 from django import forms
 from .models import Customers
-from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.contrib.auth.models import User
 
 class CustomersForm(forms.ModelForm):
@@ -22,10 +22,10 @@ class  AuthUserForm(AuthenticationForm, forms.ModelForm):
         for field in self.fields:
             self.fields[field].widget.attrs['class'] = 'form-control'
 
-class  RegisterUserForm(forms.ModelForm):
+class  RegisterUserForm(UserCreationForm, forms.ModelForm):
     class Meta:
         model = User
-        fields = ('email', 'username', 'password')
+        fields = ('email', 'username', 'password1', 'password2' )
 
     def __init__(self,*args,**kwargs):
         super().__init__(*args,**kwargs)
@@ -34,7 +34,7 @@ class  RegisterUserForm(forms.ModelForm):
 
     def save(self, commit=True):
         user = super().save(commit=False)
-        user.set_password(self.cleaned_data["password"])
+        user.set_password(self.cleaned_data["password1"])
         if commit:
             user.save()
         return user

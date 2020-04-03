@@ -1,0 +1,22 @@
+{% extends "index.html" %}
+
+{% block content %}
+      <dl class="row mt-4">
+        <dt class="col-sm-3 h2">Account: </dt>
+        <dd class="col-sm-9 h2"><u>{{user.username}}</u></dd>
+      
+        
+          <dt class="col-sm-3 mt-4">Create date:</dt>
+          <dd class="col-sm-9 mt-4">
+          <p>{{user.date_joined}}</p>
+          </dd>
+      
+          <dt class="col-sm-3">Email:</dt>
+          <dd class="col-sm-9">{{user.email}}</dd>
+      
+          <dt class="col-sm-3 text-truncate">Full name:</dt>
+          <dd class="col-sm-9">{{user.get_full_name}}</dd>
+          </dd>
+      </dl>
+      <p><a class="btn btn-primary btn-lg btn-block" href="/">Return</a></p>
+  {% endblock %}

@@ -8,7 +8,7 @@ from django.contrib.auth.views import LoginView, LogoutView
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.mixins import LoginRequiredMixin
-
+from django.contrib.auth.password_validation import *
 
 class HomeListView(LoginRequiredMixin,ListView):
     model = Customers
@@ -20,7 +20,10 @@ class HomeDetailListView(LoginRequiredMixin,DetailView):
     template_name = "detail.html"
     context_object_name = 'get_customer'
 
-
+class AccountDetailListView(LoginRequiredMixin,DetailView):
+    model = User
+    template_name = "account_page.html"
+    context_object_name = 'get_account'
 
 class CustomSuccessMessageMixin:
     @property
@@ -32,7 +35,6 @@ class CustomSuccessMessageMixin:
         return super().form_valid(form)
     def get_success_url(self):
         return '%s?id=%s' % (self.success_url, self.object.id)
-
 
 
 class CustomersCreateView(LoginRequiredMixin, CustomSuccessMessageMixin, CreateView):
@@ -88,7 +90,7 @@ class RegisterUserView(CreateView):
     def form_valid(self, form):
         form_valid = super().form_valid(form)
         username = form.cleaned_data['username']
-        password = form.cleaned_data['password']
+        password = form.cleaned_data['password1']
         aut_user = authenticate(username=username, password=password)
         login(self.request, aut_user)
         return form_valid
