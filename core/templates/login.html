@@ -1,17 +1,50 @@
 {% extends "index.html" %}
 
 {% block content %}
+<style type="text/css">
+    .form-signin {
+      width: 100%;
+      max-width: 330px;
+      padding: 15px;
+      margin: auto;
+    }
+    .form-signin .checkbox {
+    font-weight: 400;
+  }
+  .form-signin .form-control {
+    position: relative;
+    box-sizing: border-box;
+    height: auto;
+    padding: 10px;
+    font-size: 16px;
+  }
+  .form-signin .form-control:focus {
+    z-index: 2;
+  }
+  .form-signin input[type="email"] {
+    margin-bottom: 10px;
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius: 0;
+  }
+  .h3{
+    text-align: center;
+  }
+  .fp {
+    margin-left: 95px;
+  }
+  </style>
 
-<h1 class="mt-4">Login</h1>
 
-<div class="col-4">
-    <form id="add_form" method="post">
-        {% csrf_token %}
-        {{form}}
-        {% url "register_page" as url_registration_page %}
-        <button form="add_form" type="submit" class="btn btn-primary mt-3">Login</button></p>
-    </form>
-
-
+<div class="form-signin">
+    <h1 class="mt-4 h3">Login</h1>
+        <form id="add_form" method="post">
+                {% csrf_token %}
+                {{form}}
+                {% url "register_page" as url_registration_page %}
+        <a href="password-reset-form" class="badge badge-pill badge-info mt-3 fp" role="button" aria-pressed="true">Forgot pasword</a>
+        </form>
+        <button form="add_form" type="submit" class="btn btn-lg btn-primary btn-block mt-3">Login</button>
+    
 </div>
+
 {% endblock %}

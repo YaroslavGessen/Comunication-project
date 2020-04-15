@@ -4,11 +4,12 @@ from django.views.generic import ListView, DetailView, CreateView, UpdateView, D
 from django.contrib import messages
 from .forms import CustomersForm, AuthUserForm, RegisterUserForm
 from django.urls import reverse, reverse_lazy
-from django.contrib.auth.views import LoginView, LogoutView
+from django.contrib.auth.views import *
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.password_validation import *
+from django.contrib.auth.forms import PasswordChangeForm
 
 class HomeListView(LoginRequiredMixin,ListView):
     model = Customers
@@ -79,6 +80,34 @@ class AuthorizationLoginView(LoginView):
     success_url = reverse_lazy('edit_page')
     def get_success_url(self):
         return self.success_url
+
+class ChangePasswordLoginView(LoginRequiredMixin,PasswordChangeView):
+    template_name = "change_password_page.html"
+    form_class = PasswordChangeForm
+    success_msg = 'Password was changed successfully'
+    success_url = reverse_lazy('password_change_done')
+    def get_success_url(self):
+        return self.success_url
+
+class ChangePasswordDoneView(LoginRequiredMixin, PasswordChangeDoneView):
+    template_name = "password_change_done.html"
+    success_msg = 'Password change successful'
+    
+class ResetPasswordView(PasswordResetView):
+    email_template_name = 'password_reset_email.html'
+    template_name = "password_reset_form.html"
+    subject_template_name = 'password_reset_subject.txt'
+    success_url = reverse_lazy('password_reset_done')
+
+class ResetPasswordDoneView(PasswordResetDoneView):
+    template_name = 'password_reset_done.html'
+
+class ResetPasswordConfirmView(PasswordResetConfirmView):
+    template_name = 'password_reset_confirm.html'
+
+class ResetPasswordCompleteView(PasswordResetCompleteView):
+    template_name = 'password_reset_complete.html'
+
 
 class RegisterUserView(CreateView):
     model = User
