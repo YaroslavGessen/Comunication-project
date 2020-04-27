@@ -8,8 +8,8 @@ class Customers(models.Model):
     name = models.CharField(max_length=200)
     text = models.TextField()
 
-    # def __str__(self):
-    #     return "%s: %s" % (self.customer_id, self.name)
+    def __str__(self):
+        return "%s: %s" % (self.customer_id, self.name)
 
     class Meta:
         verbose_name = ("Customer")

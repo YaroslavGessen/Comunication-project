@@ -1,0 +1,8 @@
+For debugging purposes you could setup a local smtpserver with this command:
+
+python -m smtpd -n -c DebuggingServer localhost:1025
+
+and adjust your mail settings accordingly:
+
+EMAIL_HOST = 'localhost'
+EMAIL_PORT = 1025

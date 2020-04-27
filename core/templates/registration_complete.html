@@ -1,0 +1,17 @@
+{% extends 'index.html' %}
+
+
+{% block content %}
+<style type="text/css">
+	.message {
+		width: 100%;
+		max-width: auto;
+		padding: 12px;	
+		margin-top: 20px;
+		text-align: center;
+}
+</style>
+<div class="alert alert-success message" role="alert">
+	<p class="m-auto">Registration Successful!</br>You may go ahead and <a href="{% url 'login_page' %}">Login</a> now.</p>
+</div>
+{% endblock %}

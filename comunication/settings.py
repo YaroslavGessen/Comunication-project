@@ -31,6 +31,8 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'django_password_validators',
+    'django_password_validators.password_history',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -38,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'core',
+    'axes',
 ]
 
 MIDDLEWARE = [
@@ -48,6 +51,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'axes.middleware.AxesMiddleware',
 ]
 
 ROOT_URLCONF = 'comunication.urls'
@@ -87,7 +91,15 @@ LOGIN_URL = 'login_page'
 # https://docs.djangoproject.com/en/3.0/ref/settings/#auth-password-validators
 
 PASSWORD_USE_HISTORY = True
-PASSWORD_HISTORY_COUNT = 5
+PASSWORD_HISTORY_COUNT = 3
+
+AUTHENTICATION_BACKENDS = [
+    # AxesBackend should be the first backend in the AUTHENTICATION_BACKENDS list.
+    'axes.backends.AxesBackend',
+
+    # Django ModelBackend is the default authentication backend.
+    'django.contrib.auth.backends.ModelBackend',
+]
 
 AUTH_PASSWORD_VALIDATORS = [
 
@@ -96,12 +108,18 @@ AUTH_PASSWORD_VALIDATORS = [
     },
     {
         'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+        'OPTIONS': {
+            'min_length': 10,
+        }
     },
     {
         'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
     },
     {
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
+    },
+    {
+        'NAME': 'django_password_validators.password_history.password_validation.UniquePasswordsValidator',
     },
 ]
 
@@ -111,7 +129,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Tel_Aviv'
 
 USE_I18N = True
 
@@ -125,5 +143,7 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+
 EMAIL_HOST = 'localhost'
 EMAIL_PORT = 1025
+AXES_ENABLED = True

@@ -108,21 +108,24 @@ class ResetPasswordConfirmView(PasswordResetConfirmView):
 class ResetPasswordCompleteView(PasswordResetCompleteView):
     template_name = 'password_reset_complete.html'
 
+class RegistrationCompleteView(PasswordResetCompleteView):
+    template_name = 'registration_complete.html'
 
 class RegisterUserView(CreateView):
     model = User
     template_name = "registration_page.html"
     form_class = RegisterUserForm
-    success_url = reverse_lazy('home')
+    success_url = reverse_lazy('registration_complete')
     success_msg = 'User was created successfully'
     
-    def form_valid(self, form):
-        form_valid = super().form_valid(form)
-        username = form.cleaned_data['username']
-        password = form.cleaned_data['password1']
-        aut_user = authenticate(username=username, password=password)
-        login(self.request, aut_user)
-        return form_valid
+    # def form_valid(self, form):
+    #     form_valid = super().form_valid(form)
+    #     username = form.cleaned_data['username']
+    #     password = form.cleaned_data['password1']
+    #     aut_user = authenticate(username=username, password=password)
+    #     login(self.request, aut_user)
+    #     return form_valid
+    #problems with axes login
 
 class ProjectLogout(LogoutView):
     next_page = reverse_lazy('login_page')

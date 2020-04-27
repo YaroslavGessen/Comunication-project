@@ -1,25 +1,21 @@
 {% extends "index.html" %}
-
 {% block content %}
 <style type="text/css">
     .form-signin {
       width: 100%;
-      max-width: 330px;
-      padding: 15px;
+      max-width: 550px;
+      padding: 12px;
       margin: auto;
     }
-    .form-signin .checkbox {
-    font-weight: 400;
-  }
+  
   .form-signin .form-control {
     position: relative;
     box-sizing: border-box;
     height: auto;
     padding: 10px;
-    font-size: 16px;
-  }
-  .form-signin .form-control:focus {
-    z-index: 2;
+    font-size: 14px;
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    
   }
   .form-signin input[type="email"] {
     margin-bottom: 10px;
@@ -29,19 +25,46 @@
   .h3{
     text-align: center;
   }
-  .fp {
-    margin-left: 95px;
+  .button {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 50%;
+    padding: 10px;
   }
   </style>
 
 
-<div class="form-signin h6">
-    <h1 class="mt-4 h3">Registration</h1>
-        <form id="add_form" method="post">
-                {% csrf_token %}
-                {{form}}
-        </form>
-        <button form="add_form" type="submit" class="btn btn-lg btn-primary btn-block mt-3">Registration</button>
-    
+  <div class="form-signin">
+    <form method="POST">
+        {% csrf_token %}
+        <fieldset class="form-group">
+            <legend class="border-bottom mb-4 h3">Join Today</legend>
+            <a class="form-signin form-control"> 
+              {% for field in form %}
+              <p>
+                {{ field.label_tag}}<br>
+                {{ field }}
+                {% if field.help_text %}
+                  <small style="color: grey">{{ field.help_text }}</small>
+                {% endif %}
+                {% for error in field.errors %}
+                  <p style="color: red">{{ error }}</p>
+                {% endfor %}
+              </p>
+            {% endfor %}
+          </a>
+        </fieldset>
+      </p>
+        <div class="form-group">
+            <button class="btn btn-outline-info button" type="submit">Sign Up</button>
+        </div>
+    </form>
+    <div class="border-top pt-3">
+        <small class="text-muted">
+            {% url "home" as url_home%}
+            Already Have An Account? <a class="ml-2" href="{{url_home}}">Sign In</a>
+        </small>
+    </div>
 </div>
 {% endblock %}
